@@ -1,0 +1,16 @@
+{
+    "contracts": [
+        {
+            "sender": "Server",
+            "sAccepted": true,
+            "receiver": "WogLad",
+            "rAccepted": false,
+            "transactedItems": [
+                {
+                    "itemName": "WogCoin",
+                    "amount": 5
+                }
+            ]
+        }
+    ]
+}
