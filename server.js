@@ -18,13 +18,26 @@ fs.readFile("contracts.json", 'utf8', (err, data) => {
     contractsJson = JSON.parse(data).contracts;
 });
 
+var io = require('socket.io')(server, {
+    cors: {
+        origin: '*',
+    }
+});
+
 app.get("/contracts/", function (req, res) {
-    res.render("contract", {contractId: null});
+    res.render("contract", {contractId: ""});
 });
 
 app.get("/contracts/:id", function (req, res) {
     // console.log(JSON.stringify(contractsJson[Number(req.params.id)]))
-    res.render("contract", {contractId: req.params.id, contractJson: JSON.stringify(contractsJson[req.params.id])});
+    
+    // If the contract id exceeds the length of the contracts list
+    if (Number(req.params.id) >= contractsJson.length) {
+        res.render("contract", {contractId: ""});
+    }
+    else {
+        res.render("contract", {contractId: req.params.id, contractJson: JSON.stringify(contractsJson[req.params.id])});
+    }
 });
 
 var port = 80;
