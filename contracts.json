@@ -11,6 +11,22 @@
                     "amount": 5
                 }
             ]
+        },
+        {
+            "sender": "WogLad",
+            "sAccepted": false,
+            "receiver": "DalGow",
+            "rAccepted": false,
+            "transactedItems": [
+                {
+                    "itemName": "WogCoin",
+                    "amount": 2
+                },
+                {
+                    "itemName": "Solana",
+                    "amount": 3
+                }
+            ]
         }
     ]
 }
