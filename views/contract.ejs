@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script>
         const CONTRACT_ID = "<%= contractId %>";
-        const CONTRACT_JSON = JSON.parse(CONTRACT_ID.replaceAll("&#34;", '"'));
+        const CONTRACT_JSON = JSON.parse("<%= contractJson %>".replaceAll("&#34;", '"'));
     </script>
     <title>Wogtracts</title>
 
@@ -157,6 +157,11 @@
         else {
             window.location.replace("/contracts/" + String(Number(prompt("Enter a Contract Number"))));
         }
+    </script>
+
+    <!-- The Socket.IO Code -->
+    <script>
+
     </script>
 </body>
 </html>

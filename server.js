@@ -25,7 +25,7 @@ var io = require('socket.io')(server, {
 });
 
 app.get("/contracts/", function (req, res) {
-    res.render("contract", {contractId: ""});
+    res.render("contract", {contractId: "", contractJson: ""});
 });
 
 app.get("/contracts/:id", function (req, res) {
@@ -33,7 +33,7 @@ app.get("/contracts/:id", function (req, res) {
     
     // If the contract id exceeds the length of the contracts list
     if (Number(req.params.id) >= contractsJson.length) {
-        res.render("contract", {contractId: ""});
+        res.render("contract", {contractId: "", contractJson: ""});
     }
     else {
         res.render("contract", {contractId: req.params.id, contractJson: JSON.stringify(contractsJson[req.params.id])});
