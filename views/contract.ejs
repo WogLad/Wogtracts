@@ -6,8 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script>
         const CONTRACT_ID = "<%= contractId %>";
-        const CONTRACT_JSON = JSON.parse("<%= contractJson %>".replaceAll("&#34;", '"'));
+        var CONTRACT_JSON = JSON.parse("<%= contractJson %>".replaceAll("&#34;", '"'));
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
     <title>Wogtracts</title>
 
     <style>
@@ -115,18 +116,20 @@
             // The accept button part of the contract div
             var acceptButton = document.createElement("button");
             acceptButton.id = "acceptButton";
-            acceptButton.onclick = (e) => {
+            acceptButton.addEventListener("click", (e) => {
                 // (TODO): Make a socket.io connection to update the contracts.json file.
                 if (localStorage.getItem("wogtractUsername") == CONTRACT_JSON.sender) {
                     console.log("sender");
                     CONTRACT_JSON.sAccepted = true;
+                    socket.emit('accept-contract', {type: "sender", contractId: CONTRACT_ID});
                 }
                 else if (localStorage.getItem("wogtractUsername") == CONTRACT_JSON.receiver) {
                     console.log("receiver");
                     CONTRACT_JSON.rAccepted = true;
+                    socket.emit('accept-contract', {type: "receiver", contractId: CONTRACT_ID});
                 }
                 document.getElementById("contractDiv").innerHTML = getContractDiv().innerHTML;
-            }
+            });
             acceptButton.innerText += "ACCEPT";
             el.append(acceptButton);
             
@@ -161,7 +164,17 @@
 
     <!-- The Socket.IO Code -->
     <script>
+        const socket = io(`http://${document.domain}:80`);
 
+        socket.emit('new-user', {"name": localStorage.getItem("wogtractUsername")});
+
+        socket.on('update-contract-ui', acceptanceJson => {
+            if (CONTRACT_ID == acceptanceJson.contractId) {
+                CONTRACT_JSON = acceptanceJson.contractJson;
+                var contractDiv = getContractDiv();
+                document.getElementById("contractDiv").innerHTML = contractDiv.innerHTML;
+            }
+        });
     </script>
 </body>
 </html>
