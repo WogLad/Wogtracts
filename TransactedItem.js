@@ -22,3 +22,8 @@ class WogCoin extends TransactedItem {
         super(name, amount);
     }
 }
+
+module.exports =  {
+    TransactedItem,
+    WogCoin
+};

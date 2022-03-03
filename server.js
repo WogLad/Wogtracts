@@ -1,5 +1,6 @@
 var express = require("express");
 var fs = require("fs");
+// const { WogCoin, TransactedItem } = require("./TransactedItem");
 
 var app = express();
 
@@ -7,6 +8,11 @@ var server = require("http").Server(app);
 
 app.set("view engine", "ejs");
 app.use(express.static('public'));
+
+// var a = new WogCoin("WogCoin", 2);
+// var b = new TransactedItem("Solane", 5);
+// console.log(JSON.stringify(a));
+// console.log(JSON.stringify(b));
 
 var contractsJson = {};
 fs.readFile("contracts.json", 'utf8', (err, data) => {
@@ -37,6 +43,9 @@ app.get("/contracts/:id", function (req, res) {
     }
 });
 
+//(TODO): Make custom user creatable TransactedItem(s) based on the TransactedItem class.
+//(TODO): Integrate the custom items into the contracts.json file so that it can be viewed properly on the site.
+
 const users = {};
 
 io.on('connection', socket => {
@@ -46,6 +55,7 @@ io.on('connection', socket => {
         console.log(`${userDict["name"]} connected at ${new Date().toLocaleTimeString()}`);
     });
     socket.on('accept-contract', acceptanceJson => {
+        //(TODO): Make it update the contracts.json file with the updated data every time the data is modified.
         switch(acceptanceJson.type) {
             case "sender":
                 contractsJson[acceptanceJson.contractId].sAccepted = true;
