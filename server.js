@@ -29,6 +29,10 @@ var io = require('socket.io')(server, {
     }
 });
 
+app.get("/name", function (req, res) {
+    res.render("name");
+});
+
 app.get("/contracts/", function (req, res) {
     res.render("contract", {contractId: "", contractJson: ""});
 });
