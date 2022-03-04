@@ -1,6 +1,6 @@
 var express = require("express");
 var fs = require("fs");
-// const { WogCoin, TransactedItem } = require("./TransactedItem");
+const { WogCoin, TransactedItem } = require("./TransactedItem");
 
 var app = express();
 
@@ -37,6 +37,11 @@ app.get("/contracts/", function (req, res) {
     res.render("contract", {contractId: "", contractJson: ""});
 });
 
+app.get("/contracts/new", function (req, res) {
+    //(TODO): Make two buttons at first that allow the user to choose to either upload a new TransactedItem class or to make a new contract with any of the pre-existing TransactedItem classes.
+    //(TODO): Make a page that allows people to upload custom TransactedItem class code to the server.
+});
+
 app.get("/contracts/:id", function (req, res) {
     // If the contract id exceeds the length of the contracts list
     if (Number(req.params.id) >= contractsJson.length) {
@@ -48,6 +53,24 @@ app.get("/contracts/:id", function (req, res) {
 });
 
 //(TODO): Make custom user creatable TransactedItem(s) based on the TransactedItem class.
+/** The dictionary of custom TransactedItem(s) classes. */
+var customTransactedItems = {
+    /* The dictionary key should always be lower-case. */
+    // "solane": <The class that can be instanced>
+};
+
+function addNewCustomTransactedItemClass(transactedItemName, stringCode) {
+    transactedItemName = transactedItemName.toLowerCase();
+    if (Object.keys(customTransactedItems).includes(transactedItemName)) return false;
+    eval(`customTransactedItems["${transactedItemName}"] = ${stringCode}`);
+    return true;
+}
+
+// Testing code below, for the addNewCustomTransactedItemClass function
+    // console.log(addNewCustomTransactedItemClass("solane", "class Solane extends TransactedItem { constructor(name, amount) { super(name, amount); } }"));
+    // console.log(addNewCustomTransactedItemClass("solane", "class Solane extends TransactedItem { constructor(name, amount) { super(name, amount); } }"));
+    // console.log(JSON.stringify(new customTransactedItems["solane"]("Solane1", 3)));
+
 //(TODO): Integrate the custom items into the contracts.json file so that it can be viewed properly on the site.
 
 const users = {};
