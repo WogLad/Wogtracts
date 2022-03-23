@@ -38,8 +38,9 @@ app.get("/contracts/", function (req, res) {
 });
 
 app.get("/contracts/new", function (req, res) {
-    //(TODO): Make two buttons at first that allow the user to choose to either upload a new TransactedItem class or to make a new contract with any of the pre-existing TransactedItem classes.
+    //(DONE): Make two buttons at first that allow the user to choose to either upload a new TransactedItem class or to make a new contract with any of the pre-existing TransactedItem classes.
     //(TODO): Make a page that allows people to upload custom TransactedItem class code to the server.
+    res.render("newContract");
 });
 
 app.get("/contracts/:id", function (req, res) {
