@@ -7,7 +7,7 @@
             "rAccepted": false,
             "transactedItems": [
                 {
-                    "itemName": "WogCoin",
+                    "name": "WogCoin",
                     "amount": 5
                 }
             ]
@@ -19,11 +19,11 @@
             "rAccepted": false,
             "transactedItems": [
                 {
-                    "itemName": "WogCoin",
+                    "name": "WogCoin",
                     "amount": 2
                 },
                 {
-                    "itemName": "Solana",
+                    "name": "Solana",
                     "amount": 3
                 }
             ]

@@ -31,6 +31,7 @@
 
         button {
             padding: 8px;
+            margin-bottom: 5px;
             position: relative;
             vertical-align: top;
             color: white;
@@ -67,6 +68,16 @@
             cursor: not-allowed;
             opacity: 60%;
         }
+
+        table, th, tr, td {
+            border: 1px solid rgb(232, 232, 232);
+            margin: auto;
+            margin-bottom: 15px;
+            padding: 7px;
+            border-collapse: collapse;
+            vertical-align: middle;
+            border-style: solid;
+        }
     </style>
 </head>
 <body>
@@ -89,7 +100,7 @@
             el.style.border = "2px #007500 solid";
             el.style.borderRadius = "10px";
             el.style.maxWidth = "450px";
-            el.style.height = "300px";
+            el.style.height = "fit-content";
             el.style.backgroundColor = "#242424";
             el.style.boxShadow = "rgb(0 0 0) 0px 0px 15px 5px";
             el.style.paddingLeft = "15px";
@@ -108,10 +119,22 @@
             el.innerHTML += "<br>";
             el.innerHTML += "<br>";
 
-            // (TODO): Make the list of transacted items an html table.
+            // (DONE): Make the list of transacted items an html table.
+            var tableHTML = "<table>";
+            tableHTML += "<th>S No.</th><th>Name</th><th>Amount</th>";
+            var i = 0;
             CONTRACT_JSON.transactedItems.forEach(item => {
-                el.innerHTML += `<p>Name: ${item.itemName}, Amount: ${item.amount}</p>`;
+                // el.innerHTML += `<p>Name: ${item.name}, Amount: ${item.amount}</p>`;
+                i++;
+                console.log(item);
+                tableHTML += "<tr>";
+                tableHTML += `<td>${i}</td>`;
+                tableHTML += `<td>${item.name}</td>`;
+                tableHTML += `<td>${item.amount}</td>`;
+                tableHTML += "</tr>";
             });
+            tableHTML += "</table>";
+            el.innerHTML += tableHTML;
 
             // The accept button part of the contract div
             var acceptButton = document.createElement("button");
