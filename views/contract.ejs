@@ -70,10 +70,11 @@
         }
 
         table, th, tr, td {
+            font-size: 15px;
             border: 1px solid rgb(232, 232, 232);
             margin: auto;
             margin-bottom: 15px;
-            padding: 7px;
+            padding: 5px 7px;
             border-collapse: collapse;
             vertical-align: middle;
             border-style: solid;
@@ -140,7 +141,7 @@
             var acceptButton = document.createElement("button");
             acceptButton.id = "acceptButton";
             acceptButton.addEventListener("click", (e) => {
-                // (TODO): Make a socket.io connection to update the contracts.json file.
+                // (DONE): Make a socket.io connection to update the contracts.json file.
                 if (localStorage.getItem("wogtractUsername") == CONTRACT_JSON.sender) {
                     console.log("sender");
                     CONTRACT_JSON.sAccepted = true;

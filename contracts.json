@@ -4,7 +4,7 @@
             "sender": "Server",
             "sAccepted": true,
             "receiver": "WogLad",
-            "rAccepted": false,
+            "rAccepted": true,
             "transactedItems": [
                 {
                     "name": "WogCoin",
@@ -14,9 +14,9 @@
         },
         {
             "sender": "WogLad",
-            "sAccepted": false,
+            "sAccepted": true,
             "receiver": "DalGow",
-            "rAccepted": false,
+            "rAccepted": true,
             "transactedItems": [
                 {
                     "name": "WogCoin",

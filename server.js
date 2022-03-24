@@ -83,16 +83,18 @@ io.on('connection', socket => {
         console.log(`${userDict["name"]} connected at ${new Date().toLocaleTimeString()}`);
     });
     socket.on('accept-contract', acceptanceJson => {
-        //(TODO): Make it update the contracts.json file with the updated data every time the data is modified.
+        //(DONE): Make it update the contracts.json file with the updated data every time the data is modified.
         switch(acceptanceJson.type) {
             case "sender":
                 contractsJson[acceptanceJson.contractId].sAccepted = true;
                 socket.broadcast.emit("update-contract-ui", {contractId: acceptanceJson.contractId, contractJson: contractsJson[acceptanceJson.contractId]});
+                fs.writeFileSync("contracts.json", JSON.stringify({contracts: contractsJson}, null, 4));
             break;
 
             case "receiver":
                 contractsJson[acceptanceJson.contractId].rAccepted = true;
                 socket.broadcast.emit("update-contract-ui", {contractId: acceptanceJson.contractId, contractJson: contractsJson[acceptanceJson.contractId]});
+                fs.writeFileSync("contracts.json", JSON.stringify({contracts: contractsJson}, null, 4));
             break;
         }
     });
