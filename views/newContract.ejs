@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <title>New Contract</title>
 
     <style>
@@ -62,57 +64,73 @@
             cursor: not-allowed;
             opacity: 60%;
         }
+
+        #whatDoYouWantToCreateDiv {
+            margin: auto;
+            margin-top: 10%;
+            border: 2px #007500 solid;
+            border-radius: 10px;
+            max-width: 450px;
+            height: 300px;
+            background-color: #242424;
+            box-shadow: black 0px 0px 15px 5px;
+            padding-left: 15px;
+            text-align: center;
+            padding-right: 13px;
+        }
+
+        textarea {
+            width: 99%;
+            height: 34rem;
+            background-color: #252525;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+        }
     </style>
 </head>
 <body style="display: flex; align-items: center; flex-direction: column;">
     <script>
-        function getContractDiv() {
-            var el = document.createElement("div");
-            
-            // The header part of the contract div
-            el.innerHTML = `<h2><u>What do you want to create?</u></h2>`;
-            el.innerHTML += "<hr width='200px' style='margin-top: -20px;'>";
+        const socket = io(`http://${document.domain}:80`);
+        socket.emit('new-user', {"name": localStorage.getItem("wogtractUsername")});
 
-            // The styling part of the contract div
-            el.style.margin = "auto";
-            el.style.marginTop = "10%";
-            el.style.border = "2px #007500 solid";
-            el.style.borderRadius = "10px";
-            el.style.maxWidth = "450px";
-            el.style.height = "300px";
-            el.style.backgroundColor = "#242424";
-            el.style.boxShadow = "rgb(0 0 0) 0px 0px 15px 5px";
-            el.style.paddingLeft = "15px";
-            el.style.textAlign = "center";
-            el.style.paddingRight = "13px";
-            // el.style.display = "flex";
-            // el.style.flexDirection = "column";
-
-            // The body part of the contract div
-            el.append(document.createElement("br"));
-
-            var newTransactedItemClassButton = document.createElement("button");
-            newTransactedItemClassButton.innerHTML = "New TransactedItem Class";
-            el.append(newTransactedItemClassButton);
-
-            el.append(document.createElement("br"));
-            el.append(document.createElement("br"));
-            
-            var newContractButton = document.createElement("button");
-            newContractButton.innerHTML = "New Contract";
-            el.append(newContractButton);
-
-            return el;
-        }
-
-        document.body.append(getContractDiv());
+        socket.on('custom-transacteditem-completion-status', (completionStatus) => {
+            if (completionStatus == true) {
+                alert("Custom TransactedItem Code Successfully Uploaded to the Server");
+            }
+            else {
+                alert("Custom TransactedItem Code Failed to Upload to the Server\nClass with the same name already exists");
+            }
+        });
     </script>
 
-    <!-- <h2>What do you want to make?</h2>
-    <div style="display: flex; flex-direction: column;">
-        <button>New TransactedItem Class</button>
+    <div id="whatDoYouWantToCreateDiv">
+        <h2>What do you want to create?</h2>
+        <hr width='200px' style='margin-top: -20px;'>
         <br>
+        <button id="newTransactedItemClassButton">New TransactedItem Class</button>
+        <br><br>
         <button>New Contract</button>
-    </div> -->
+    </div>
+
+    <div id="customTransactedItemsCodeSubmissionDiv" style="width: 100%;" hidden>
+        <textarea id="codeTextArea"></textarea>
+        <br>
+        <button id="codeSubmitButton">SUBMIT</button>
+    </div>
+
+    <script>
+        $("#newTransactedItemClassButton")[0].onclick = (e) => {
+            //(DONE): Show a textarea element where the user can type out the code of a JS class and submit it to the server.
+            $("#whatDoYouWantToCreateDiv")[0].hidden = true;
+            $("#customTransactedItemsCodeSubmissionDiv")[0].hidden = false;
+        };
+
+        $("#codeSubmitButton")[0].onclick = (e) => {
+            //(DONE) Send a socket.io emission to the server with the data of the code submitted.
+            var customTransactedItemsClassName = prompt("What do you want to call your TransactedItem class?");
+            if (customTransactedItemsClassName == "") {alert("You cannot enter a blank class name"); return;}
+            socket.emit('custom-transacteditem-code', {name: customTransactedItemsClassName, stringCode: document.getElementById("codeTextArea").value});
+        };
+    </script>
 </body>
 </html>

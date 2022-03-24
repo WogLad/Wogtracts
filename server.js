@@ -39,7 +39,7 @@ app.get("/contracts/", function (req, res) {
 
 app.get("/contracts/new", function (req, res) {
     //(DONE): Make two buttons at first that allow the user to choose to either upload a new TransactedItem class or to make a new contract with any of the pre-existing TransactedItem classes.
-    //(TODO): Make a page that allows people to upload custom TransactedItem class code to the server.
+    //(DONE): Make a page that allows people to upload custom TransactedItem class code to the server.
     res.render("newContract");
 });
 
@@ -53,7 +53,7 @@ app.get("/contracts/:id", function (req, res) {
     }
 });
 
-//(TODO): Make custom user creatable TransactedItem(s) based on the TransactedItem class.
+//(DONE): Make custom user creatable TransactedItem(s) based on the TransactedItem class.
 /** The dictionary of custom TransactedItem(s) classes. */
 var customTransactedItems = {
     /* The dictionary key should always be lower-case. */
@@ -101,6 +101,13 @@ io.on('connection', socket => {
         socket.broadcast.emit('user-disconnected', users[socket.id]["name"]);
         console.log(`${users[socket.id]["name"]} disconnected at ${new Date().toLocaleTimeString()}`);
         delete users[socket.id];
+    });
+    socket.on('custom-transacteditem-code', (customTransactedItemClassData) => {
+        var didAddNewCustomTransactedItemClassSucceed = addNewCustomTransactedItemClass(customTransactedItemClassData["name"], customTransactedItemClassData["stringCode"]);
+        //(DONE): Return an alert to the client using socket.io based on the return value of the addNewCustomTransactedItemClass function called above.
+        socket.emit('custom-transacteditem-completion-status', didAddNewCustomTransactedItemClassSucceed);
+        // console.log(customTransactedItemClassData);
+        // console.log(new customTransactedItems[customTransactedItemClassData["name"]]("Car1", 7, "Ferrari", "Green", 4, 2).color);
     });
 });
 
