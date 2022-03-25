@@ -85,6 +85,8 @@
             background-color: #252525;
             color: white;
             font-family: 'Courier New', Courier, monospace;
+            border-radius: 7px;
+            padding: 7px;
         }
     </style>
 </head>
@@ -109,7 +111,7 @@
         <br>
         <button id="newTransactedItemClassButton">New TransactedItem Class</button>
         <br><br>
-        <button>New Contract</button>
+        <button id="newContractCreationButton">New Contract</button>
     </div>
 
     <div id="customTransactedItemsCodeSubmissionDiv" style="width: 100%;" hidden>
@@ -118,11 +120,21 @@
         <button id="codeSubmitButton">SUBMIT</button>
     </div>
 
+    <!-- (TODO): Create the div that allows the user to select what transacted item class they want to use in their contract for each item and they should be able to add an unlimited amount of transacted items to a single contract. -->
+    <div id="newContractCreationDiv" style="width: 100%;" hidden>
+        Yoooooooooooooo!
+    </div>
+
     <script>
         $("#newTransactedItemClassButton")[0].onclick = (e) => {
             //(DONE): Show a textarea element where the user can type out the code of a JS class and submit it to the server.
             $("#whatDoYouWantToCreateDiv")[0].hidden = true;
             $("#customTransactedItemsCodeSubmissionDiv")[0].hidden = false;
+        };
+
+        $("#newContractCreationButton")[0].onclick = (e) => {
+            $("#whatDoYouWantToCreateDiv")[0].hidden = true;
+            $("#newContractCreationDiv")[0].hidden = false;
         };
 
         $("#codeSubmitButton")[0].onclick = (e) => {
