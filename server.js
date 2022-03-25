@@ -1,6 +1,6 @@
 var express = require("express");
 var fs = require("fs");
-const { WogCoin, TransactedItem } = require("./TransactedItem");
+const { Car, WogCoin, TransactedItem } = require("./TransactedItem");
 
 var app = express();
 

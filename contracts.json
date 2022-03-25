@@ -7,7 +7,7 @@
             "rAccepted": true,
             "transactedItems": [
                 {
-                    "name": "WogCoin",
+                    "type": "WogCoin",
                     "amount": 5
                 }
             ]
@@ -19,12 +19,20 @@
             "rAccepted": true,
             "transactedItems": [
                 {
-                    "name": "WogCoin",
+                    "type": "WogCoin",
                     "amount": 2
                 },
                 {
-                    "name": "Solana",
+                    "type": "Solana",
                     "amount": 3
+                },
+                {
+                    "type": "Car",
+                    "amount": 1,
+                    "brand": "BMW",
+                    "color": "Green",
+                    "wheelCount": 4,
+                    "seatCount": 5
                 }
             ]
         }

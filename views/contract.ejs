@@ -78,6 +78,7 @@
             border-collapse: collapse;
             vertical-align: middle;
             border-style: solid;
+            /* margin-right: 15px; */
         }
     </style>
 </head>
@@ -100,7 +101,8 @@
             el.style.marginTop = "10%";
             el.style.border = "2px #007500 solid";
             el.style.borderRadius = "10px";
-            el.style.maxWidth = "450px";
+            el.style.minWidth = "450px";
+            el.style.width = "fit-content";
             el.style.height = "fit-content";
             el.style.backgroundColor = "#242424";
             el.style.boxShadow = "rgb(0 0 0) 0px 0px 15px 5px";
@@ -121,17 +123,22 @@
             el.innerHTML += "<br>";
 
             // (DONE): Make the list of transacted items an html table.
+            // (DONE): Make the table creation code dynamic for the custom transacted item types.
             var tableHTML = "<table>";
-            tableHTML += "<th>S No.</th><th>Name</th><th>Amount</th>";
+            tableHTML += `<th>S No.</th><th>Type</th><th>Amount</th><th colspan=999999>Custom Attributes</th>`;
             var i = 0;
             CONTRACT_JSON.transactedItems.forEach(item => {
-                // el.innerHTML += `<p>Name: ${item.name}, Amount: ${item.amount}</p>`;
                 i++;
                 console.log(item);
                 tableHTML += "<tr>";
-                tableHTML += `<td>${i}</td>`;
-                tableHTML += `<td>${item.name}</td>`;
-                tableHTML += `<td>${item.amount}</td>`;
+                tableHTML += `<td><b>${i}.</b></td>`;
+                tableHTML += `<td>${item.type}`;
+                tableHTML += `<td>${item.amount}`;
+                Object.keys(item).forEach(key => {
+                    if (key.toLowerCase() != "amount" && key.toLowerCase() != "type") {
+                        tableHTML += `<td>${item[key]}</td>`;
+                    }
+                });
                 tableHTML += "</tr>";
             });
             tableHTML += "</table>";
