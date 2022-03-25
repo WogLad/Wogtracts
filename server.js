@@ -110,6 +110,7 @@ io.on('connection', socket => {
         socket.emit('custom-transacteditem-completion-status', didAddNewCustomTransactedItemClassSucceed);
         // console.log(customTransactedItemClassData);
         // console.log(new customTransactedItems[customTransactedItemClassData["name"]]("Car1", 7, "Ferrari", "Green", 4, 2).color);
+        console.log(Object.keys(new customTransactedItems[customTransactedItemClassData["name"]])); // Logs a list of the attributes of the class
     });
 });
 
